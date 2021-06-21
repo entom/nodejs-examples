@@ -23,11 +23,15 @@ const randomNumber = () => {
     }
 }
 
-server.listen(port, hostname, () => {
+server.listen(port, hostname, async () => {
     console.log(`Server running at http://${hostname}:${port}/`)
 
     randomNumber()
-    getFileSize(`${__dirname}/package.json`).then((response) => {
-        console.log('file-size', response)
-    })
+
+    try {
+        const fileSize = await getFileSize(`${__dirname}/package.json`);
+        console.log('file-size, success', fileSize)
+    } catch (e) {
+        console.log('file-size, error', e)
+    }
 })
