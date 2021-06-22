@@ -1,4 +1,5 @@
 const fs = require('fs')
+const path = require('path')
 
 const MB = 1024000;
 
@@ -17,4 +18,16 @@ exports.getFileSize = (filePath) => {
             }
         })
     })
+}
+
+exports.getFileInfo = (filePath) => {
+    return {
+        dirname: path.dirname(filePath),
+        basename: path.basename(filePath),
+        extname: path.extname(filePath),
+    }
+}
+
+exports.getAbsolutePathFromRelative = (filePath) => {
+    return path.resolve(filePath)
 }

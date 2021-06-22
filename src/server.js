@@ -1,6 +1,6 @@
 const http = require('http')
 const EventEmitter = require('events')
-const {getFileSize} = require('./lib/utils')
+const {getFileSize, getFileInfo, getAbsolutePathFromRelative} = require('./lib/utils')
 
 const eventEmitter = new EventEmitter()
 
@@ -28,10 +28,15 @@ server.listen(port, hostname, async () => {
 
     randomNumber()
 
+    const filePath = `${__dirname}/package.json`;
+
     try {
-        const fileSize = await getFileSize(`${__dirname}/package.json`);
+        const fileSize = await getFileSize(filePath);
         console.log('file-size, success', fileSize)
     } catch (e) {
         console.log('file-size, error', e)
     }
+
+    console.log('file-info', getFileInfo(filePath))
+    console.log('file-absolute', getAbsolutePathFromRelative('./package.json'))
 })
