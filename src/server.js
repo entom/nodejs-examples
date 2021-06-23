@@ -8,9 +8,14 @@ const hostname = '0.0.0.0'
 const port = process.env.PORT || 3000
 
 const server = http.createServer((req, res) => {
-    res.statusCode = 200
-    res.setHeader('Content-Type', 'text/plain')
-    res.end('Hello World :)\n')
+    if (req.url === '/' && req.method === 'GET') {
+        res.statusCode = 200
+        res.setHeader('Content-Type', 'text/plain')
+        res.end('Hello World :)\n')
+    } else if (req.url === '/status' && req.method === 'GET') {
+        res.writeHead(200, {'Content-Type': 'application/json'})
+        res.end(JSON.stringify({status: 'ok'}));
+    }
 })
 
 eventEmitter.on('random-number', (value) => {
